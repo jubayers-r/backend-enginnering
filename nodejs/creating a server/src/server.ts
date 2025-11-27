@@ -1,10 +1,7 @@
 import http, { IncomingMessage, Server, ServerResponse } from "http";
 import config from "./config";
 import { RouteHandler, routes } from "./helpers/RouteHander";
-import sendJson from "./helpers/sendJson";
-
-
-sendJson("GET", "/", 200, { message: "Hello from typescipt nodejs" });
+import "./routes";
 
 const server: Server = http.createServer(
   (req: IncomingMessage, res: ServerResponse) => {
@@ -31,7 +28,6 @@ const server: Server = http.createServer(
     }
   }
 );
-
 
 server.listen(config.port, () => {
   console.log("server is running from port 5000");
