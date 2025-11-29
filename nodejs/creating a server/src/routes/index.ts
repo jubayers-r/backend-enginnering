@@ -1,3 +1,4 @@
+import { readUsers, writeUsers } from "../helpers/fakeDb";
 import parseBody from "../helpers/parseBody";
 import addRoutes from "../helpers/RouteHander";
 import sendJson from "../helpers/sendJson";
@@ -12,6 +13,18 @@ addRoutes("GET", "/", (req, res) => {
 
 addRoutes("POST", "/api/users", async (req, res) => {
   const body = await parseBody(req);
+
+  const users = readUsers();
+
+  const newUsers = {
+    id: Date.now(),
+    ...body,
+  };
+
+  users.push(newUsers);
+
+  writeUsers(users);
+
   sendJson(res, 201, {
     success: true,
     data: body,
