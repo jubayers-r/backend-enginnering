@@ -12,7 +12,6 @@ dotenv.config({ path: path.join(process.cwd(), ".env") });
 app.use(express.json());
 
 //DB
-
 const pool = new Pool({
   connectionString: `${process.env.DATABASE_URL}`,
 });
@@ -136,7 +135,6 @@ app.post("/users", async (req: Request, res: Response) => {
 });
 
 // put requests
-
 app.put("/users/:id", async (req: Request, res: Response) => {
   const reqId = req.params.id;
   const { name, email } = req.body;
@@ -159,6 +157,38 @@ app.put("/users/:id", async (req: Request, res: Response) => {
         success: true,
         message: `User ${reqId} updated successfully`,
         data: result.rows[0],
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      details: error,
+    });
+  }
+});
+
+// delete requests
+app.delete("/users/:id", async (req: Request, res: Response) => {
+  const reqId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      `
+      DELETE FROM users WHERE id = $1
+      `,
+      [reqId]
+    );
+
+    if (result.rowCount === 1) {
+      res.status(200).json({
+        success: true,
+        message: `User ${reqId} deleted successfully`,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: `User ${reqId} not found`,
       });
     }
   } catch (error: any) {
