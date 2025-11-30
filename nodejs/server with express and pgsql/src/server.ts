@@ -57,6 +57,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello world damn son");
 });
 
+// get requests
 app.get("/users", async (req: Request, res: Response) => {
   try {
     const result = await pool.query(`
@@ -109,6 +110,7 @@ app.get("/users/:id", async (req: Request, res: Response) => {
   }
 });
 
+// post requests
 app.post("/users", async (req: Request, res: Response) => {
   const { name, email } = req.body;
 
@@ -129,6 +131,41 @@ app.post("/users", async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message,
+    });
+  }
+});
+
+// put requests
+
+app.put("/users/:id", async (req: Request, res: Response) => {
+  const reqId = req.params.id;
+  const { name, email } = req.body;
+
+  try {
+    const result = await pool.query(
+      `
+      UPDATE users SET name=$1, email=$2 WHERE id=$3 RETURNING *
+      `,
+      [name, email, reqId]
+    );
+
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: `User ${reqId} not found`,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: `User ${reqId} updated successfully`,
+        data: result.rows[0],
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      details: error,
     });
   }
 });
