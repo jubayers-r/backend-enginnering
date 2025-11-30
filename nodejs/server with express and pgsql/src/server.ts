@@ -14,7 +14,7 @@ app.use(express.json());
 //DB
 
 const pool = new Pool({
-  connectionString: `${process.env.neon_str}`,
+  connectionString: `${process.env.DATABASE_URL}`,
 });
 
 const initDB = async () => {
@@ -57,11 +57,26 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello world damn son");
 });
 
-app.post("/", (req: Request, res: Response) => {
-  console.log(req.body);
+app.post("/users", async (req: Request, res: Response) => {
+  const { name, email } = req.body;
 
-  res.status(201).json({
-    success: true,
-    message: "API is Working",
-  });
+  try {
+    const result = await pool.query(
+      `
+    INSERT INTO users(name, email) VALUES($1, $2) RETURNING *
+    `,
+      [name, email]
+    );
+
+    res.status(201).json({
+      success: true,
+      message: "Data inserted",
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 });
