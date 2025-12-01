@@ -1,0 +1,39 @@
+{
+  "name": "todo-app-express-pgsql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm exec tsx watch ./src/server.ts",
+    "format": "pnpm exec prettier . --write",
+    "build": "tsc",
+    "start": "node ./dist/server.js"
+  },
+  "keywords": [
+    "express",
+    "todo-app",
+    "postgresql",
+    "typescript",
+    "nodejs",
+    "backend"
+  ],
+  "author": "jubayers-r",
+  "license": "ISC",
+  "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
+    "prettier": "^3.7.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
