@@ -3,8 +3,8 @@ import { todoController } from "./todo.controller.js";
 
 const router = express.Router();
 
-router.get("/:user_id", todoController.findAllByUserId);
+router.get("/", todoController.findAll);
 
-router.post("/:user_id", todoController.createByUserId);
+router.post("/", todoController.create);
 
 export const todoRoutes = router;

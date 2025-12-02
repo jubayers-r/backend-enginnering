@@ -1,6 +1,6 @@
 import { pool } from "../../config/db.js";
 
-const getTodosByUserId = async (uid: string) =>
+const getTodos = async (uid: string) =>
   pool.query(
     `
     SELECT * FROM todos WHERE user_id = $1
@@ -8,7 +8,7 @@ const getTodosByUserId = async (uid: string) =>
     [uid],
   );
 
-const createTodoByUserId = async (
+const createTodo = async (
   uid: string,
   title: string,
   description: string,
@@ -23,6 +23,6 @@ const createTodoByUserId = async (
   );
 
 export const todoService = {
-  getTodosByUserId,
-  createTodoByUserId,
+  getTodos,
+  createTodo,
 };

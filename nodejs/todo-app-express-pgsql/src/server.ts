@@ -9,7 +9,7 @@ const app: Application = express();
 const port = config.port || 5000;
 
 app.use(express.json());
-app.use("/todos", todoRoutes);
+app.use("/users/:user_id/todos", todoRoutes);
 app.use("/users", userRoutes);
 
 // DB

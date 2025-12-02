@@ -1,6 +1,6 @@
 import asyncHandler from "../../utils/asyncHandler.js";
 import { Request, Response } from "express";
-import { notFound, success } from "../../utils/responseUtils.js";
+import { badRequest, notFound, success } from "../../utils/responseUtils.js";
 import { userService } from "./user.service.js";
 
 const findAll = asyncHandler(async (_req: Request, res: Response) => {
@@ -18,19 +18,21 @@ const findOne = asyncHandler(async (req: Request, res: Response) => {
   const userId = req.params.id;
 
   const result = await userService.getUserById(userId!);
-  if (result.rows.length > 0) {
-    success(res, result.rows[0]);
-  } else {
+
+  if (!result.rows.length) {
     notFound(res, "user on this id");
   }
-  return result;
+
+  return success(res, result.rows[0]);
 });
 
 const create = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, age, phone, address } = req.body;
   const result = await userService.createUser(name, email, age, phone, address);
-  success(res, result.rows);
-  return result;
+  if (!result.rows.length) {
+    badRequest(res);
+  }
+  return success(res, result.rows);
 });
 
 export const userController = {
