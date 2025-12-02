@@ -27,8 +27,7 @@ const findOne = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const create = asyncHandler(async (req: Request, res: Response) => {
-  const { name, email, age, phone, address } = req.body;
-  const result = await userService.createUser(name, email, age, phone, address);
+  const result = await userService.createUser(req.body);
   if (!result.rows.length) {
     badRequest(res);
   }

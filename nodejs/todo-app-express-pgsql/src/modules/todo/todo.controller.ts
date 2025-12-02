@@ -1,4 +1,3 @@
-import { pool } from "../../config/db.js";
 import asyncHandler from "../../utils/asyncHandler.js";
 import { badRequest, notFound, success } from "../../utils/responseUtils.js";
 import { Request, Response } from "express";
@@ -17,15 +16,8 @@ const findAll = asyncHandler(async (req: Request, res: Response) => {
 
 const create = asyncHandler(async (req: Request, res: Response) => {
   const uid = req.params.user_id;
-  const { title, description, completed, due_date } = req.body;
 
-  const result = await todoService.createTodo(
-    uid!,
-    title,
-    description,
-    completed,
-    due_date,
-  );
+  const result = await todoService.createTodo(uid!, req.body);
 
   if (!result.rows.length) {
     badRequest(res);

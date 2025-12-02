@@ -15,18 +15,13 @@ const getUserById = async (userId: string) =>
     [userId],
   );
 
-const createUser = async (
-  name: string,
-  email: string,
-  age: number,
-  phone: string,
-  address: string,
-) =>
-  pool.query(
+const createUser = async (payload: Record<string, unknown>) => {
+  const { name, email, age, phone, address } = payload;
+  return pool.query(
     `
     INSERT INTO users(name, email, age, phone, address)VALUES($1, $2, $3, $4, $5 ) RETURNING *
     `,
     [name, email, age, phone, address],
   );
-
+};
 export const userService = { getAllUsers, getUserById, createUser };
