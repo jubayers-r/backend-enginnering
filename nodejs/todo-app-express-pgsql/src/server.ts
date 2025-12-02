@@ -1,14 +1,16 @@
 import express, { Application, Request, Response } from "express";
-import { initDB } from "./db.js";
-import todosRoutes from "./routes/todos.js";
-import usersRoutes from "./routes/users.js";
+
+import { todoRoutes } from "./modules/todo/todo.route.js";
+import { userRoutes } from "./modules/user/user.route.js";
+import config from "./config/index.js";
+import { initDB } from "./config/db.js";
 
 const app: Application = express();
-const port = process.env.PORT || 5000;
+const port = config.port || 5000;
 
 app.use(express.json());
-app.use("/todos", todosRoutes);
-app.use("/users", usersRoutes);
+app.use("/todos", todoRoutes);
+app.use("/users", userRoutes);
 
 // DB
 initDB()
