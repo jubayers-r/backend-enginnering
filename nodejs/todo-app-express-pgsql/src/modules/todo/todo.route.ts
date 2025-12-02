@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 import { todoController } from "./todo.controller.js";
 
-const router = express.Router();
+const router = Router({ mergeParams: true });
 
 router.get("/", todoController.findAll);
 

@@ -1,6 +1,6 @@
-import express from "express";
+import { Router } from "express";
 import { userController } from "./user.controller.js";
-const router = express.Router();
+const router = Router();
 
 router.get("/", userController.findAll);
 
