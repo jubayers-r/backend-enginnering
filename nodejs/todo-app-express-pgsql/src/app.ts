@@ -3,6 +3,7 @@ import { todoRoutes } from "./modules/todo/todo.route.js";
 import { userRoutes } from "./modules/user/user.route.js";
 import { initDB } from "./config/db.js";
 import { authRoutes } from "./modules/auth/auth.route.js";
+import { notFound } from "./utils/responseUtils.js";
 
 const app: Application = express();
 
@@ -23,7 +24,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");
 });
 
-
-
+app.use((_req, res) => {
+  notFound(res, "route not found");
+});
 
 export default app;
