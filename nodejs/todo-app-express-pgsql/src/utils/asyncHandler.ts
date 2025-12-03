@@ -7,7 +7,11 @@ const asyncHandler =
     try {
       await fn(req, res, next!);
     } catch (error) {
-      err(res, error);
+      if (!res.headersSent) {
+        return err(res, error);
+      }
+      // If headers are already sent → delegate to Express
+      // next!(error);
     }
   };
 
