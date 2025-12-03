@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import { todoRoutes } from "./modules/todo/todo.route.js";
 import { userRoutes } from "./modules/user/user.route.js";
 import { initDB } from "./config/db.js";
@@ -22,5 +22,8 @@ app.get("/", (req: Request, res: Response) => {
   console.log("connected through", req.method, "method and", req.path, "path");
   res.send("Hello world");
 });
+
+
+
 
 export default app;
