@@ -4,7 +4,7 @@ import auth from "../../middleware/auth.js";
 
 const router = Router({ mergeParams: true });
 
-router.get("/", auth, todoController.findAll);
+router.get("/", auth("admin"), todoController.findAll);
 
 router.post("/", todoController.create);
 

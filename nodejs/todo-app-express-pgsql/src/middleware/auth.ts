@@ -1,36 +1,33 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config/index.js";
-import asyncHandler from "../utils/asyncHandler.js";
-import { authServices } from "../modules/auth/auth.service.js";
-import { success } from "../utils/responseUtils.js";
 
-const auth = asyncHandler(
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    const token = req.headers.authorization;
-    const secret = config.jwt_secret;
+const authenticate =
+  (...roles: string[]) =>
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const header = req.headers.authorization;
 
-    // console.log({ authToken:  });
+      if (!header || !header.startsWith("Bearer ")) {
+        return res.status(401).json({ message: "Unauthorized access" });
+      }
 
-    if (!token) {
-      return res.status(401).json({
-        message: "you are not allowed to login",
-      });
+      const token = header.split(" ")[1];
+
+      const decoded = jwt.verify(
+        token!,
+        config.jwt_secret as string,
+      ) as JwtPayload;
+
+      req.user = decoded;
+
+      if (!roles.includes(req.user!.role)) {
+        return res.status(403).json({ message: "forbidden" });
+      }
+      next();
+    } catch (error) {
+      return res.status(401).json({ message: "Invalid or expired token" });
     }
+  };
 
-    const decoded = jwt.verify(token, secret as string) as JwtPayload;
-
-    req.user = decoded;
-
-    // console.log(role);
-    success(res, decoded);
-
-    next();
-  },
-);
-
-export default auth;
+export default authenticate;

@@ -12,23 +12,28 @@ const verifyUser = async (payload: { email: string; password: string }) => {
     [email],
   );
 
-  if (!result.rows.length) {
-    return null;
-  }
-
+  if (!result.rows.length) return null;
   const user = result.rows[0];
 
-  const match = await bcrypt.compare(password, user.password);
 
-  if (!match) {
-    return false;
-  }
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return false;
+  delete user.password;
+
   const secret = config.jwt_secret;
-  const token = jwt.sign({ email, role: user.role }, secret as string, {
+  const accessToken = jwt.sign(
+    { id: user.id, email, role: user.role },
+    secret as string,
+    {
+      expiresIn: "15m",
+    },
+  );
+
+  const refreshToken = jwt.sign({ id: user.id }, secret as string, {
     expiresIn: "7d",
   });
 
-  return { token, user };
+  return { accessToken, refreshToken, user };
 };
 
 export const authServices = {
