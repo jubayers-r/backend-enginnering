@@ -1,4 +1,9 @@
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, {
+  Application,
+  Request,
+  Response,
+  Router,
+} from "express";
 import { todoRoutes } from "./modules/todo/todo.route.js";
 import { userRoutes } from "./modules/user/user.route.js";
 import { initDB } from "./config/db.js";
@@ -7,10 +12,14 @@ import { notFound } from "./utils/responseUtils.js";
 
 const app: Application = express();
 
+const apiV1 = Router();
+
 app.use(express.json());
-app.use("/users/:user_id/todos", todoRoutes);
-app.use("/users", userRoutes);
-app.use("/auth", authRoutes);
+app.use("/api/v1", apiV1);
+
+apiV1.use("/users/:user_id/todos", todoRoutes);
+apiV1.use("/users", userRoutes);
+apiV1.use("/auth", authRoutes);
 
 // initialize DB
 initDB()
