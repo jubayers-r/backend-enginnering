@@ -21,22 +21,21 @@ Goal: Become proficient in Go and build real-world applications
 
 ### Day 1 – December 04, 2025
 - [ ] Set up Go environment (`go version`), got into old version sicky error on linux and finally fixed it and installed go version 1.25
+- [ ] Basic input/output with `fmt`
 - [ ] Ran "Hello, World!" program
 - [ ] Understood basic syntax: `package main`, `func main()`
 - [ ] Variables, constants, and zero values
-- [ ] if else conditionals
-- [ ] Learned about `go mod init`
-- [ ] Read: Tour of Go – Welcome & Basics
+- [ ] Control structures: if/else, switch
+- [ ] Read(quick skim): Tour of Go – Welcome & Basics
+- [ ] `var`, `:=`, `const`
+- [ ] Data types: int, string, bool, float
 
 <!-- ### Day 2 – December 05, 2025
-- [ ] Data types: int, string, bool, float
-- [ ] `var`, `:=`, `const`
-- [ ] Basic input/output with `fmt`
 
 ### Day 3 – December 06, 2025
-- [ ] Control structures: if/else, switch
 - [ ] Loops (only `for` in Go!)
 - [ ] Arrays and slices
+- [ ] Learned about `go mod init`
 - [ ] `len()`, `cap()`, `append()`, `make()`
 
 ### Day 4 – December 07, 2025
