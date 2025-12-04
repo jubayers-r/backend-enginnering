@@ -4,6 +4,7 @@ import "fmt"
 
 func main(){
 
+<<<<<<< HEAD
 /*
 int, int8, int32, int64
 uint8, uint32, uint64
@@ -39,4 +40,8 @@ string
 
 
 
+=======
+    fmt.Println("Hello Go")
+
+>>>>>>> 030ffe9e4d638b9ef39d874f1765ee799ef0df56
 }
