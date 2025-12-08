@@ -2,46 +2,32 @@ package main
 
 import "fmt"
 
-func main(){
 
-<<<<<<< HEAD
-/*
-int, int8, int32, int64
-uint8, uint32, uint64
-float32, float64
-bool
-string
-*/
-    fmt.Println("Hello Go")
+func welcomeMessage(){
+    fmt.Println("Welcome to the application")
+    fmt.Println("Your name is _")
+    fmt.Scanln(&name)
+}
 
-    // var a int = 10
-    // var a = 10
-     a:= 10
-     a = 3
-    // a = "habib" //cannot be declared different way than the first one
-
-    // const b string = "bruh"
-    const b  = "bruh"
-    // b = "habub" //constant cannot be redeclared
-
-    fmt.Println(b)
-    fmt.Println(a)
-
-    age:= 18
-    gender:= "male"
-
-    if (age >= 20 || gender == "male") {
-        fmt.Println("You eligible to fight ")
-    } else {
-        fmt.Println(" You are not eligible to fight")
-    }
+func customerName
 
 
 
+func main () {
+    welcomeMessage()
+    name := welcomeMessage()
+    var a int
+    var b int
 
 
-=======
-    fmt.Println("Hello Go")
 
->>>>>>> 030ffe9e4d638b9ef39d874f1765ee799ef0df56
+    fmt.Println("Enter first number")
+    fmt.Scanln(&a)
+    fmt.Println("Enter second number")
+    fmt.Scanln(&b)
+
+    sum := a + b
+
+    fmt.Println("Hello mr ", name)
+    fmt.Println("summation ", sum)
 }

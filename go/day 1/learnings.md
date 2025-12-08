@@ -21,7 +21,6 @@ func main(){
 # variables and data types
 
 ```go
-<<<<<<< HEAD
 package main
 
 import "fmt"
@@ -96,7 +95,11 @@ func main(){
 ```
 
 
-=======
+
+# function
+
+```go
+
+
 
 ```
->>>>>>> 030ffe9e4d638b9ef39d874f1765ee799ef0df56
