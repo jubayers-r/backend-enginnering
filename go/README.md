@@ -30,12 +30,15 @@ Goal: Become proficient in Go and build real-world applications
 - [ ] `var`, `:=`, `const`
 - [ ] Data types: int, string, bool, float
 
-<!-- ### Day 2 – December 05, 2025
+ ### Day 2 – December 08, 2025
+- [ ] Learned about `go mod init`
+- [ ] Global, Local, Block scope
+- [ ] Package scope
 
-### Day 3 – December 06, 2025
+
+<!-- ### Day 3 – December 06, 2025
 - [ ] Loops (only `for` in Go!)
 - [ ] Arrays and slices
-- [ ] Learned about `go mod init`
 - [ ] `len()`, `cap()`, `append()`, `make()`
 
 ### Day 4 – December 07, 2025
