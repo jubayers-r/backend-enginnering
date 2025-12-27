@@ -1,0 +1,8 @@
+import { Router, Request, Response } from "express";
+import { postController } from "./post.controller";
+
+const router: Router = Router();
+
+router.post("/", postController.createPost);
+
+export const postRouter = router;
