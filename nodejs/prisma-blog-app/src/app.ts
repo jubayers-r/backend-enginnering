@@ -9,7 +9,7 @@ const app: Application = express();
 app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: process.env.APP_URL,
   credentials: true
 }))
 app.use("/posts", postRouter);
