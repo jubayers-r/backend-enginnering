@@ -1,13 +1,19 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
 import { postRouter } from "./post/post.route";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./lib/auth";
+import cors from "cors";
+
 
 const app: Application = express();
-
+app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}))
 app.use("/posts", postRouter);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hellow world");
-});
+
 
 export default app;
