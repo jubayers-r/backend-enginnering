@@ -6,4 +6,6 @@ const router = Router();
 
 router.post("/", authorization(UserRole.USER), postController.createPost);
 
+router.get("/", postController.getPost);
+
 export const postRouter: Router = router;
