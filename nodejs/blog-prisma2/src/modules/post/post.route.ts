@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { postController } from "./post.controller";
-import authorization, { UserRole } from "../../middleware/authorization";
+import authorization, { UserRole } from "../../middlewares/authorization";
 
 const router = Router();
 

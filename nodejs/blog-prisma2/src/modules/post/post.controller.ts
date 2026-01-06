@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { postService } from "./post.service";
+import paginationSortingHelper from "../../helpers/paginationSortingHelper";
 
 const createPost = async (req: Request, res: Response) => {
   try {
@@ -47,20 +48,29 @@ const getPost = async (req: Request, res: Response) => {
         ? "ARCHIVED"
         : undefined;
 
-
     const authorId = req.query.authorId as string;
+
+    const { page, limit, skip, sortBy, sortOrder } = paginationSortingHelper(
+      req.query
+    );
 
     const result = await postService.getPost({
       search,
       tags,
       isFeatured,
       status,
-      authorId
+      authorId,
+      page,
+      limit,
+      skip,
+      sortBy,
+      sortOrder,
     });
 
     return res.status(200).json({
       success: true,
-      data: result,
+      data: result.data,
+      paginaton: result.pagination,
     });
   } catch (error: any) {
     return res.status(404).json({

@@ -15,65 +15,99 @@ const createPost = async (
   return result;
 };
 
-const getPost = async (payload: {
+const getPost = async ({
+  search,
+  tags,
+  isFeatured,
+  status,
+  authorId,
+  page,
+  limit,
+  skip,
+  sortBy,
+  sortOrder,
+}: {
   search: string | undefined;
   tags: string[] | [];
   isFeatured: boolean | undefined;
   status: PostStatus | undefined;
   authorId: string | undefined;
+  page: number;
+  limit: number;
+  skip: number;
+  sortBy: string;
+  sortOrder: string;
 }) => {
   const andConditions: PostWhereInput[] = [];
 
-  if (payload.search) {
+  if (search) {
     andConditions.push({
       OR: [
         {
           content: {
-            contains: payload.search as string,
+            contains: search as string,
             mode: "insensitive",
           },
         },
         {
           tags: {
-            has: payload.search as string,
+            has: search as string,
           },
         },
       ],
     });
   }
 
-  if (payload.tags.length > 0) {
+  if (tags.length > 0) {
     andConditions.push({
       tags: {
-        hasEvery: payload.tags as string[],
+        hasEvery: tags as string[],
       },
     });
   }
 
-  if (typeof payload.isFeatured === "boolean") {
+  if (typeof isFeatured === "boolean") {
     andConditions.push({
-      isFeature: payload.isFeatured,
+      isFeature: isFeatured,
     });
   }
 
-  if (payload.status) {
+  if (status) {
     andConditions.push({
-      status: payload.status,
+      status: status,
     });
   }
 
-  if (payload.authorId) {
+  if (authorId) {
     andConditions.push({
-      authorId: payload.authorId,
+      authorId: authorId,
     });
   }
 
-  const result = await prisma.post.findMany({
+  const allPosts = await prisma.post.findMany({
+    skip,
+    take: limit,
+    where: {
+      AND: andConditions,
+    },
+    orderBy: { [sortBy]: sortOrder },
+  });
+
+  const totalData = await prisma.post.count({
     where: {
       AND: andConditions,
     },
   });
-  return result;
+
+  return {
+    data: allPosts,
+    pagination: {
+      totalData,
+      page,
+      limit,
+      totalPages: Math.ceil(totalData / limit),
+    },
+  };
 };
 
 export const postService = {

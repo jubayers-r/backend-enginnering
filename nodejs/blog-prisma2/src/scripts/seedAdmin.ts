@@ -1,5 +1,5 @@
 import prisma from "../lib/prisma";
-import { UserRole } from "../middleware/authorization";
+import { UserRole } from "../middlewares/authorization";
 
 async function seedAdmin() {
   try {
