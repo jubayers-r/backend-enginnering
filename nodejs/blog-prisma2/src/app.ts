@@ -3,6 +3,7 @@ import cors from "cors";
 import { auth } from "./lib/auth";
 import { toNodeHandler } from "better-auth/node";
 import { postRouter } from "./modules/post/post.route";
+import { commentRoutes } from "./modules/comment/comment.route";
 
 const app: Application = express();
 
@@ -16,5 +17,5 @@ app.use(
 );
 
 app.use("/posts", postRouter);
-
+app.use("/:postId/comments", commentRoutes);
 export default app;
