@@ -8,4 +8,5 @@ router.post("/", authorization(UserRole.USER), postController.createPost);
 
 router.get("/", postController.getPost);
 
+router.get("/:postId", postController.getPostById);
 export const postRouter: Router = router;
