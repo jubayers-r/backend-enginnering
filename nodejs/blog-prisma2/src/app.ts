@@ -17,5 +17,5 @@ app.use(
 );
 
 app.use("/posts", postRouter);
-app.use("/:postId/comments", commentRoutes);
+app.use("/comments", commentRoutes);
 export default app;
