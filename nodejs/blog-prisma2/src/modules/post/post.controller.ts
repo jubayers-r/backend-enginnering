@@ -109,8 +109,28 @@ const getPostById = async (req: Request, res: Response) => {
   }
 };
 
+const getMyPosts = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.user;
+
+    const result = await postService.getMyPosts(id);
+
+    return res.json({
+      data: result
+    });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Post getting failed";
+    res.status(400).json({
+      error: errorMessage,
+      details: error,
+    });
+  }
+};
+
 export const postController = {
   createPost,
   getPost,
   getPostById,
+  getMyPosts,
 };
