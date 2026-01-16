@@ -116,7 +116,7 @@ const getMyPosts = async (req: Request, res: Response) => {
     const result = await postService.getMyPosts(id);
 
     return res.json({
-      data: result
+      data: result,
     });
   } catch (error) {
     const errorMessage =
@@ -128,9 +128,32 @@ const getMyPosts = async (req: Request, res: Response) => {
   }
 };
 
+const updatePost = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+
+    if (!postId) {
+      throw new Error("Post id not found");
+    }
+
+    const isAdmin = req.user.role === "ADMIN";
+
+    const result = await postService.updatePost(postId, req.body, isAdmin);
+
+    return res.json({
+      data: result,
+    });
+  } catch (error: any) {
+    res.json({
+      message: error.message,
+    });
+  }
+};
+
 export const postController = {
   createPost,
   getPost,
   getPostById,
   getMyPosts,
+  updatePost,
 };

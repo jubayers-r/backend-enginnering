@@ -198,7 +198,36 @@ const getMyPosts = async (authorId: string) => {
     },
   });
 
-  return {authorData, total};
+  return { authorData, total };
+};
+
+const updatePost = async (
+  postId: string,
+  data: Partial<Post>,
+  isAdmin: boolean
+) => {
+  const postData = await prisma.post.findFirst({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (!postData) {
+    throw new Error("post data not found");
+  }
+
+  if (!isAdmin) {
+    delete data.isFeature;
+  }
+
+  const result = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data,
+  });
+
+  return result;
 };
 
 export const postService = {
@@ -206,4 +235,5 @@ export const postService = {
   getPost,
   getPostById,
   getMyPosts,
+  updatePost,
 };
