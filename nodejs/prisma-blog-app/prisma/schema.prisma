@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Post {
-  id         String     @id @default(uuid())
+  id         Int        @id @default(autoincrement())
   title      String     @db.VarChar(225)
   content    String     @db.Text
   thumbnail  String?
@@ -35,7 +35,7 @@ model Comment {
   id       String    @id @default(uuid())
   content  String    @db.Text
   authorId String
-  postId   String
+  postId   Int
   post     Post      @relation(fields: [postId], references: [id])
   parentId String?
   parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
@@ -62,7 +62,7 @@ enum PostStatus {
 }
 
 model User {
-  id            String    @id
+  id            Int       @id @default(autoincrement())
   name          String
   email         String
   emailVerified Boolean   @default(false)
@@ -88,7 +88,7 @@ model Session {
   updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
-  userId    String
+  userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
@@ -100,7 +100,7 @@ model Account {
   id                    String    @id
   accountId             String
   providerId            String
-  userId                String
+  userId                Int
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
